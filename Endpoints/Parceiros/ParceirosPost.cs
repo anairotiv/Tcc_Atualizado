@@ -22,12 +22,18 @@ public class ParceirosPost
             Estado = parceirosRequest.Estado,
         };
 
-        var contato = new Contato {
+        /*var contato = new Contato {
             TelCelular = parceirosRequest.TelCelular,
             TelFixo = parceirosRequest.TelFixo,
-            Email = parceirosRequest.Email,
-        };
-       
+            Email = parceirosRequest.Email, 
+        }; */
+        var contato = new Contato(parceirosRequest.TelCelular, parceirosRequest.TelFixo, parceirosRequest.Email);
+
+        if (!contato.IsValid) {
+            return Results.ValidationProblem(contato.Notifications.ConvertToProblemDetails());
+        }
+
+
 
         var parceiro = new Parceiro 
         {
